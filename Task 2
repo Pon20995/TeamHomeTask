@@ -17,7 +17,7 @@ HAVING max_sum_rate < SUM(rate)
 
 
 
-\//Request 3.
+//Request 3.
 declare @ProjectWhereRateHigherBudget table (id int, name nvarchar(max))
 
  Insert into  @ProjectWhereRateHigherBudget
