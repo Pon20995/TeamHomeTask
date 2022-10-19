@@ -1,0 +1,67 @@
+//Request 1. 
+SELECT * FROM employee where project_id is NULL;
+
+
+
+//Request 2. 
+declare @new table (name nvarchar(max), max_sum_rate int, rate int)
+
+INSERT into @new 
+Select project.name, max_sum_rate, rate from project 
+inner join employee on project.id = employee.project_id
+inner join [position] on [position].id = employee.position_id
+
+select name from @new
+group by name, max_sum_rate
+HAVING max_sum_rate < SUM(rate)
+
+
+
+\//Request 3.
+declare @ProjectWhereRateHigherBudget table (id int, name nvarchar(max))
+
+ Insert into  @ProjectWhereRateHigherBudget
+Select project.id, project.name from employee
+left join project on project.id = employee.project_id
+left JOIN [position] on [position].id=employee.position_id
+group by project.id, project.name, max_sum_rate
+having max_sum_rate < SUM(rate)
+
+select first_name + ' ' + last_name as user_name from employee
+inner join @ProjectWhereRateHigherBudget table2 On employee.project_id = table2.id 
+
+
+
+//Request 4.
+declare @new table (id int, project_name NVARCHAR(max), ExpensesOnEmp int, max_sum_rate int)
+insert into @new
+Select project.id, project.name as project_name, sum(COALESCE(price/12,0))+rate as ExpensesOnEmp, max_sum_rate from employee
+left join equipment on employee.id = equipment.user_id
+left JOIN [position] on position.id = employee.position_id
+left Join project on  project.id = employee.project_id
+GROUP by project.id, project.name, rate, max_sum_rate
+
+declare @DifTableOnProj table (project_id1 int, project_name NVARCHAR(max), diff int)
+insert into @DifTableOnProj
+select id as project_id1, project_name, -sum(ExpensesOnEmp)+max_sum_rate as diff from @new
+group by id, project_name, max_sum_rate
+having -sum(ExpensesOnEmp)+max_sum_rate < 0
+
+select first_name + ' ' + last_name as user_name, diff from employee
+left join @DifTableOnProj table2 on employee.project_id = table2.project_id1
+WHERE diff < 0
+
+
+
+//Trigger
+USE task3
+GO
+CREATE TRIGGER create_pm_vacancy
+on project
+AFTER INSERT 
+AS 
+Insert into vacancies (id, position_id)
+VALUES ((Select Distinct Max(id)+1 from vacancies), 
+(Select position_id from vacancies
+left join [position] on position.id = vacancies.position_id
+where [position].name = 'PM'));
