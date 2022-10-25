@@ -1,3 +1,99 @@
+//Request 0.
+
+CREATE TABLE project (
+id int NOT NULL IDENTITY (1,1),
+name NVARCHAR (MAX)
+max_sum_rate INT
+PRIMARY KEY (id));
+
+INSERT INTO project (name, max sum_rate)
+VALUES ( 'engineer', 2300);
+INSERT INTO project (name, max_sum_rate)
+VALUES ( 'building', 3300);
+INSERT INTO project (name, max_sum_rate)
+VALUES ( 'development', 2500);
+INSERT INTO project (name, max_sum_rate)
+VALUES ( 'business', 1500);
+
+
+CREATE TABLE position(
+id int NOT NULL IDENTITY (1,1),
+name NVARCHAR (MAX)
+rate INT
+PRIMARY KEY (id));
+
+INSERT INTO position (name, rate)
+VALUES ( 'CEO', 500) :
+INSERT INTO position (name, rate)
+VALUES ( 'CTO', 400);
+INSERT INTO position (name, rate)
+VALUES ( 'developer', 300);
+INSERT INTO position (name, rate)
+VALUES ( 'PM', 200):
+INSERT INTO position (name, rate)
+VALUES ( 'BA', 200);
+
+
+CREATE TABLE equipment (
+id int NOT NULL IDENTITY (1,1),
+name NVARCHAR (MAX)
+price INT,
+user_id INT,
+PRIMARY KEY (id));
+
+INSERT INTO equipment (name, price, user_ id)
+VALUES ( 'Phone', 50, 1) ;
+INSERT INTO equipment (name, price, user_id)
+VALUES ( 'Phone', 50, 2);
+INSERT INTO equipment (name, price, user_id)
+VALUES ( 'laptop', 100, 3);
+INSERT INTO equipment (name, price, user id)
+VALUES ( 'laptop', 100, 4) ;
+INSERT INTO equipment (name, price, user_id)
+VALUES ( 'pc', 120, 2);
+INSERT INTO equipment (name, price, user_id)
+VALUES ( 'pc', 120, 5);
+INSERT INTO equipment (name, price, user id)
+VALUES ( 'ruler', 120, 2);
+
+
+CREATE TABLE vacancies (
+id int NOT NULL IDENTITY(1,1) ,
+position_id INT,
+PRIMARY KEY (id));
+
+INSERT INTO vacancies (position_id)
+VALUES (3);
+INSERT INTO vacancies (position_id)
+VALUES (4);
+INSERT INTO vacancies (position_id)
+VALUES (3);
+INSERT INTO vacancies (position_id)
+VALUES (5):
+INSERT INTO vacancies (position id)
+VALUES (2);
+
+
+CREATE TABLE employee(
+id int NOT NULL IDENTITY(1,1),
+first name NVARCHAR(MAX)
+last_name NVARCHAR(MAX),
+position_id INT,
+project_id INT
+PRIMARY KEY (id));
+INSERT INTO employee (first_name, last_name, position_id, project_id)
+VALUES ( 'Jason', 'Statham', 1, 2);
+INSERT INTO employee (first_name, last_name, position_id, project_id)
+VALUES ( 'Keanu', 'Reeves', 1, 1);
+INSERT INTO employee (first_name, last_name, position_id, project_id)
+VALUES ( 'Johnny', 'Depp', 3, 5);
+INSERT INTO employee (first_name, last_name, position_id, project_id)
+VALUES ( 'Tom', 'Cruise', 5, 3);
+INSERT INTO employee (first_name, last_name, position_id, project_id)
+VALUES ( 'Angelina', 'Jolie', 2, 4) ;
+INSERT INTO employee (first_name, last_name, position_id, project_id)
+VALUES ( 'Margot', 'Robbie', 4, 2) ;
+
 //Request 1. 
 SELECT * FROM employee where project_id is NULL;
 
