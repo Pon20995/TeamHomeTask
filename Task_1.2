@@ -1,0 +1,35 @@
+using System;
+
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int i;
+            Console.WriteLine("Input number of elements in the array :");
+            int n = Convert.ToInt32(Console.ReadLine());
+            int[] array = new int[n];
+         
+
+            Console.WriteLine("Input elements to array :");
+            for (i = 0; i < n; i++)
+            {
+                Console.Write("element - {0} : ", i+1);
+                array[i] = Convert.ToInt32(Console.ReadLine());
+            }
+
+            Console.WriteLine("Elements in array: ");
+            for (i = 0; i < n; i++)
+            {
+                Console.Write("{0}  ", array[i]);
+            }
+            Console.WriteLine("\nSwapped elements in array: ");
+            for (i = n-1; i >= 0 ; i--)
+            {
+                Console.Write("{0}  ", array[i]);
+            }
+            Console.ReadKey();
+        }
+    }
+}
