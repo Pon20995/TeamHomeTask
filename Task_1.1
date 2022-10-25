@@ -1,0 +1,32 @@
+using System;
+
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string word, reverseWord = "";
+
+            Console.WriteLine("Enter word");
+            word = Console.ReadLine();
+
+            for (int i = word.Length - 1; i >= 0; i--)
+            {
+                reverseWord += word[i].ToString();
+            }
+
+            if (reverseWord.ToLower() == word.ToLower())
+            {
+                Console.WriteLine("{0} - palindrome", word);
+            }
+
+            else
+            {
+                Console.WriteLine("{0} - not palindrome", word);
+            }
+            Console.ReadKey();
+
+        }
+    }
+}
