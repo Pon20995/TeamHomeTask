@@ -8,168 +8,115 @@ class Program
     {
 
         var cells = "+-";
+int counter = 0;
 
-        var firstArray = new char[3, 3];
-        var newArray = new char[3, 3];
-        int height = firstArray.GetLength(0);
-        int width = firstArray.GetLength(1);
+var firstArray = new char[5, 9];
+var newArray = new char[5, 9];
+int height = firstArray.GetLength(0);
+int width = firstArray.GetLength(1);
 
+//Створити масив із рандромних - та +
+Console.WriteLine("\nFirst Generation:");
+var random = new Random();
+for (int i = 0; i < height; i++)
+{
+    for (int j = 0; j < width; j++)
+    {
+        firstArray[i, j] = cells[random.Next(cells.Length)];
+        Console.Write(firstArray[i, j] + "\t");
+    }
 
-        //Створити масив із рандромних - та +
-        Console.WriteLine("\nFirst Generation:");
-        var random = new Random();
-        for (int i = 0; i < height; i++)
+    Console.WriteLine();
+
+}
+Console.ReadKey();
+Console.Clear();
+
+//Функція пошуку живих клітинок навколо
+int GetNeighbors(int y, int x)
+{
+    int NumOfAliveNeighbors = 0;
+
+    for (int i = y - 1; i < y + 2; i++)
+    {
+        for (int j = x - 1; j < x + 2; j++)
         {
-            for (int j = 0; j < width; j++)
+            if (!((i < 0 || j < 0) || (i >= height || j >= width)))
             {
-                firstArray[i, j] = cells[random.Next(cells.Length)];
-                Console.Write(firstArray[i, j] + "\t");
+                if (firstArray[i, j] == '+' && !(i == y && j == x))
+                    NumOfAliveNeighbors += 1;
             }
-
-            Console.WriteLine();
-
         }
-        Console.ReadKey();
-        Console.Clear();
+
+    }
+    return NumOfAliveNeighbors;
+}
+// Виведення кількості живих клітинок навколо
+//Console.WriteLine("Number of alive cells");
+//Console.WriteLine(GetNeighbors(0, 0));
+//Console.WriteLine(GetNeighbors(0, 1));
+//Console.WriteLine(GetNeighbors(0, 2));
+//Console.WriteLine(GetNeighbors(1, 0));
+//Console.WriteLine(GetNeighbors(1, 1));
+//Console.WriteLine(GetNeighbors(1, 2));
+//Console.WriteLine(GetNeighbors(2, 0));
+//Console.WriteLine(GetNeighbors(2, 1));
+//Console.WriteLine(GetNeighbors(2, 2));
+//Console.ReadKey();
+for (counter = 0; counter<30; counter++){
 
 
-        //Функція пошуку живих клітинок навколо
-        int GetNeighbors(int y, int x)
+ 
+    Console.WriteLine($"\nNext Generation: {counter}");
+
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = 0; j < width; j++)
         {
-            int NumOfAliveNeighbors = 0;
 
-            for (int i = y - 1; i < y + 2; i++)
+            int aliveNeighbors = GetNeighbors(i, j);
+
+            if (firstArray[i, j] == '+')
             {
-                for (int j = x - 1; j < x + 2; j++)
+                if (aliveNeighbors < 2)
                 {
-                    if (!((i < 0 || j < 0) || (i >= height || j >= width)))
-                    {
-                        if (firstArray[i, j] == '+' && !(i == y && j == x))
-                            NumOfAliveNeighbors += 1;
-                    }
+                    newArray[i, j] = '-';
+                }
+
+                if (aliveNeighbors > 3)
+                {
+                    newArray[i, j] = '-';
+                }
+                if (aliveNeighbors == 2 || aliveNeighbors == 3)
+                {
+                    newArray[i, j] = '+';
                 }
 
             }
-            return NumOfAliveNeighbors;
-        }
-
-        //Функція порівняння масивів
-        bool sequencesEqual(char[,] a, char[,] b)
-        {
-            //Check if they are the same references
-            if (object.ReferenceEquals(a, b))
-                return true;
-
-            //Check if they are equall lenght
-            if (a.Length != b.Length)
-                return false;
-
-            //force check if all the values are the same, return on first dissimilarity
-            for (int i = 0; i < height; i++)
+            else
             {
-                for (int j = 0; j < width; j++)
+                if (aliveNeighbors == 3)
                 {
-                    if (a[i, j] != b[i, j])
-                        return false;
-                }
-
-            }
-
-            return true;
-        }
-        //Console.WriteLine(sequencesEqual(firstArray, newArray));
-
-        // Виведення кількості живих клітинок навколо
-        //Console.WriteLine("Number of alive cells");
-        //Console.WriteLine(GetNeighbors(0, 0));
-        //Console.WriteLine(GetNeighbors(0, 1));
-        //Console.WriteLine(GetNeighbors(0, 2));
-        //Console.WriteLine(GetNeighbors(1, 0));
-        //Console.WriteLine(GetNeighbors(1, 1));
-        //Console.WriteLine(GetNeighbors(1, 2));
-        //Console.WriteLine(GetNeighbors(2, 0));
-        //Console.WriteLine(GetNeighbors(2, 1));
-        //Console.WriteLine(GetNeighbors(2, 2));
-
-
-        //Підрахунок наступного покоління
-        Console.WriteLine("\nNext Generation:");
-        for (int i = 0; i < height; i++)
-        {
-            for (int j = 0; j < width; j++)
-            {
-                int aliveNeighbors = GetNeighbors(i, j);
-
-                if (firstArray[i, j] == '+')
-                {
-                    if (aliveNeighbors < 2)
-                    {
-                        newArray[i, j] = '-';
-                    }
-
-                    if (aliveNeighbors > 3)
-                    {
-                        newArray[i, j] = '-';
-                    }
-                    if (aliveNeighbors == 2 || aliveNeighbors == 3)
-                    {
-                        newArray[i, j] = '+';
-                    }
-
+                    newArray[i, j] = '+';
                 }
                 else
                 {
-                    if (aliveNeighbors == 3)
-                    {
-                        newArray[i, j] = '+';
-                    }
-                    else
-                    {
-                        newArray[i, j] = '-';
-                    }
-
+                    newArray[i, j] = '-';
                 }
 
             }
+            Console.Write(newArray[i, j] + "\t");
+            firstArray[i, j] = newArray[i, j];
         }
+        Console.WriteLine();
+        
+    }
 
+    Console.ReadKey();
+    Console.Clear();
 
-        //Виведення наступного покоління
-        for (int i = 0; i < height; i++)
-        {
-            for (int j = 0; j < width; j++)
-            {
-
-                Console.Write(newArray[i, j] + "\t");
-            }
-            Console.WriteLine();
-        }
-
-        Console.ReadKey();
-        Console.Clear();
-
-
-        //while (sequencesEqual(firstArray, newArray) != true)
-        //{
-        //    for (int i = 0; i < height; i++)
-        //    {
-        //        for (int j = 0; j < width; j++)
-        //        {
-        //            newArray[i, j] = firstArray[i, j];
-        //            Console.Write(newArray[i, j] + "\t");
-             
-
-        //        }
-        //        Console.WriteLine();
-        //    }
-
-        //    Console.ReadKey();
-        //    Console.Clear();
-        //}
-
-
-
-
+}
+Console.WriteLine("Game Over");
 
 
     }
