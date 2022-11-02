@@ -1,0 +1,55 @@
+namespace Loop
+{
+   class Program
+  {
+      static void Main(string[] args)
+      {
+          int firstNumber = 0;
+          int secondNumber = 1;
+          Console.WriteLine("Enter number:");
+          int number = int.Parse(Console.ReadLine());
+          Console.Write(firstNumber);
+
+          for (int i = 1; i <= number; i += secondNumber)
+          {
+
+              Console.Write("\t" + i);
+
+              secondNumber = i - secondNumber;
+          }
+          Console.ReadLine();
+      }
+  }
+)
+
+
+
+namespace FibonacciSeries
+{
+    class Program
+    {
+        public static void FibonacciRecursive
+       (
+        int firstnumber,
+        int secondnumber,
+        int i,
+        int number
+       )
+        {
+
+            if (i <= number)
+            {
+                Console.Write("{0} ", i);
+                FibonacciRecursive(secondnumber, firstnumber + secondnumber, i += secondnumber, number);
+            }
+        }
+
+        public static void Main(string[] args)
+        {
+            Console.Write("Enter number: ");
+            int number = Convert.ToInt32(Console.ReadLine());
+            FibonacciRecursive(0, 1, 1, number);
+            Console.ReadKey();
+        }
+    }
+}
