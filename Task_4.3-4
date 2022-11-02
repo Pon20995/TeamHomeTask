@@ -48,6 +48,7 @@ namespace FibonacciSeries
         {
             Console.Write("Enter number: ");
             int number = Convert.ToInt32(Console.ReadLine());
+            Console.Write("0 1 ");
             FibonacciRecursive(0, 1, 1, number);
             Console.ReadKey();
         }
